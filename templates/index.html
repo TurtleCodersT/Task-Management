@@ -1,0 +1,96 @@
+{% include "header.html" %}
+<!-- Page Header-->
+<header
+  class="masthead"
+>
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="site-heading">
+          <h1>Tasks</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+  {% if not current_user.is_authenticated %}
+    <h2>You are not logged in. In order to use this website please register or login</h2>
+    {% endif %}
+    <h2>Today's date is {{date}} at {{time}}</h2>
+    <h3>Overdue Tasks</h3>
+    {% for task in all_tasks %}
+    {% if task.user_id == current_user.id %}
+    {% if task.is_overdue == "1" %}
+    <h4>Task Title: {{task.task_name}} Description: {{task.description}} Due date: {{task.deadline}} Time: {{task.time}} <a href="{{url_for('delete', input_id=task.id)}}">Delete Task</a> <a href="{{url_for('edit_task', task_id=task.id)}}">Edit</a></h4>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    <h3>_________________________________________________________________________________</h3>
+
+    <h3>ASAP</h3>
+    {% for task in all_tasks %}
+    {% if task.user_id == current_user.id %}
+    {% if task.speed == "ASAP" %}
+    {% if task.is_overdue == "0" %}
+    <h4>Task Title: {{task.task_name}} Description: {{task.description}} Due date: {{task.deadline}} Time: {{task.time}} <a href="{{url_for('delete', input_id=task.id)}}">Delete Task</a> <a href="{{url_for('edit_task', task_id=task.id)}}">Edit</a></h4>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    <h3>_________________________________________________________________________________</h3>
+
+
+    <h3>Next Few days</h3>
+    {% for task in all_tasks %}
+    {% if task.user_id == current_user.id %}
+    {% if task.speed == "Within a few days" %}
+    {% if task.is_overdue == "0" %}
+    <h4>Task Title: {{task.task_name}} Description: {{task.description}} Due date: {{task.deadline}} Time: {{task.time}} <a href="{{url_for('delete', input_id=task.id)}}">Delete Task</a> <a href="{{url_for('edit_task', task_id=task.id)}}">Edit</a></h4>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    <h3>_________________________________________________________________________________</h3>
+
+    <h3>1-2 weeks</h3>
+    {% for task in all_tasks %}
+    {% if task.user_id == current_user.id %}
+    {% if task.speed == "I have at least a week or two" %}
+    {% if task.is_overdue == "0" %}
+    <h4>Task Title: {{task.task_name}} Description: {{task.description}} Due date: {{task.deadline}} Time: {{task.time}} <a href="{{url_for('delete', input_id=task.id)}}">Delete Task</a> <a href="{{url_for('edit_task', task_id=task.id)}}">Edit</a></h4>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    <h3>_________________________________________________________________________________</h3>
+
+    <h3>1 month</h3>
+    {% for task in all_tasks %}
+    {% if task.user_id == current_user.id %}
+    {% if task.speed == "One whole month to complete this" %}
+    {% if task.is_overdue == "0" %}
+    <h4>Task Title: {{task.task_name}} Description: {{task.description}} Due date: {{task.deadline}} Time: {{task.time}} <a href="{{url_for('delete', input_id=task.id)}}">Delete Task</a> <a href="{{url_for('edit_task', task_id=task.id)}}">Edit</a></h4>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    <h3>_________________________________________________________________________________</h3>
+
+    <h3>2 or more months</h3>
+    {% for task in all_tasks %}
+    {% if task.user_id == current_user.id %}
+    {% if task.speed == "Extremely long time 2 months or more" %}
+    {% if task.is_overdue == "0" %}
+    <h4>Task Title: {{task.task_name}} Description: {{task.description}} Due date: {{task.deadline}} Time: {{task.time}} <a href="{{url_for('delete', input_id=task.id)}}">Delete Task</a> <a href="{{url_for('edit_task', task_id=task.id)}}">Edit</a></h4>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    <h3>_________________________________________________________________________________</h3>
+  </div>
+</div>
+
+{% include "footer.html" %}
